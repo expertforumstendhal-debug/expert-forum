@@ -495,11 +495,23 @@
       .scale-header {
   display: grid;
   grid-template-columns: repeat(5, 44px);
-  justify-content: center;
-  gap: 12px;
-  margin-top: 10px;
-  margin-bottom: 6px;
+  grid-template-areas:
+    "text text text text text"
+    "n1 n2 n3 n4 n5";
+  gap: 10px 12px;
+  justify-content: start;
+  margin-bottom: 14px;
 }
+
+.scale-header > div:first-child {
+  grid-area: text;
+}
+
+.scale-header .score-cell:nth-of-type(2) { grid-area: n1; }
+.scale-header .score-cell:nth-of-type(3) { grid-area: n2; }
+.scale-header .score-cell:nth-of-type(4) { grid-area: n3; }
+.scale-header .score-cell:nth-of-type(5) { grid-area: n4; }
+.scale-header .score-cell:nth-of-type(6) { grid-area: n5; }
 
 .scale-header .score-cell {
   justify-content: center;
