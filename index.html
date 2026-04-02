@@ -493,8 +493,19 @@
       }
 
       .scale-header {
-  grid-template-columns: 1fr;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(5, 44px);
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+  margin-bottom: 6px;
+}
+
+.scale-header .score-cell {
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  color: #008b98;
 }
 
 .question-row {
