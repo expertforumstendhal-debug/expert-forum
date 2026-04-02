@@ -492,16 +492,36 @@
         padding: 10px 12px;
       }
 
-      .scale-header,
-      .question-row {
-        grid-template-columns: 1fr;
-        gap: 8px;
-      }
+      .scale-header {
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
 
-      .scale-header .score-cell,
-      .question-row .score-cell {
-        justify-content: flex-start;
-      }
+.question-row {
+  grid-template-columns: repeat(5, 44px);
+  grid-template-areas:
+    "label label label label label"
+    "r1 r2 r3 r4 r5";
+  gap: 10px 12px;
+  align-items: center;
+}
+
+.question-label {
+  grid-area: label;
+  font-size: 15px;
+  line-height: 1.4;
+  padding-right: 0;
+}
+
+.question-row .score-cell:nth-of-type(2) { grid-area: r1; }
+.question-row .score-cell:nth-of-type(3) { grid-area: r2; }
+.question-row .score-cell:nth-of-type(4) { grid-area: r3; }
+.question-row .score-cell:nth-of-type(5) { grid-area: r4; }
+.question-row .score-cell:nth-of-type(6) { grid-area: r5; }
+
+.question-row .score-cell {
+  justify-content: center;
+}
 
       .scale-header {
         font-size: 16px;
@@ -637,6 +657,14 @@
     font-size: 13px;
   }
 }
+	  
+	  .mobile-scale-row {
+  display: none;
+}
+
+.mobile-scale-row .score-cell {
+  justify-content: center;
+}
   </style>
 </head>
 	<body>
@@ -771,6 +799,14 @@
         Su certificado ha sido generado correctamente.<br>
         Esperamos contar con su participación en una próxima ocasión.
       </p>
+	
+	  <div style="max-width:700px; margin:16px auto 0; padding:12px 16px; background:#f3f7f8; border-radius:10px;">
+    <p style="margin:0; font-size:14px; color:#5e7076;">
+    Si solicitó el envío por correo electrónico, revise también su carpeta de 
+    <strong>correo no deseado o spam</strong>.
+    </p>
+    </div>
+		
 
       <div class="field" style="max-width:700px; margin: 24px auto;">
         <p style="margin:0 0 14px; font-size:18px; color:#0097a7; font-weight:700;">
