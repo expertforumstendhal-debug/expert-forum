@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expert Forum | Encuesta y Certificado</title>
+  <style>
+    :root {
+      --green: #8dc63f;
+      --green-dark: #6fb02a;
+      --teal: #00a7b5;
+      --teal-dark: #008b98;
+      --blue: #0b4fa3;
+      --text: #18424b;
+      --muted: #5e7076;
+      --bg: linear-gradient(135deg, #91c11f 0%, #00a9b7 100%);
+      --panel: rgba(255,255,255,0.96);
+      --border: #c8dadd;
+      --shadow: 0 16px 45px rgba(0,0,0,.18);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 20px;
+      position: relative;
+	  flex-direction: column;
+    }
+
+    .page.active {
+      display: flex;
+    }
+
+    #pageSurvey {
+      padding-top: 120px;
+      flex-direction: column;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 1000px;
+      background: var(--panel);
+      border-radius: 0;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero {
+      padding: 0;
+      background: transparent;
+      text-align: center;
+    }
+
+    .hero img {
+      width: 100%;
+      display: block;
+      margin: 0;
+      padding: 0;
+    }
+
+    .body {
+      padding: 28px 36px 40px;
+    }
+
+    h1, h2 {
+      margin: 0 0 14px;
+      text-align: center;
+      color: var(--teal-dark);
+      font-size: 34px;
+      line-height: 1.1;
+    }
+
+    .intro {
+      text-align: center;
+      max-width: 780px;
+      margin: 0 auto 10px;
+      color: var(--blue);
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    .legal-note {
+      text-align: center;
+      font-size: 11px;
+      color: var(--blue);
+      margin-top: 6px;
+      margin-bottom: 28px;
+      opacity: 0.8;
+    }
+
+    .field,
+    .question-block {
+      background: #dff0f1;
+      border: 1px solid #cfe4e6;
+      border-radius: 18px;
+      padding: 22px 26px;
+      margin-bottom: 18px;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .field-row label {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--teal-dark);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      border: 1px solid #b8c9cc;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 15px;
+      color: var(--text);
+      outline: none;
+      background: white;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 4px rgba(0,167,181,.15);
+    }
+
+    .scale-header,
+    .question-row {
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) repeat(5, 44px);
+      gap: 12px;
+      align-items: center;
+    }
+
+    .scale-header {
+      margin-bottom: 18px;
+      color: #0097a7;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .question-row {
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(0,0,0,.04);
+    }
+
+    .question-row:last-child {
+      border-bottom: 0;
+    }
+
+    .question-label {
+      padding-right: 12px;
+      line-height: 1.45;
+      color: #0097a7;
+      font-size: 17px;
+      font-weight: 400;
+    }
+
+    .score-cell {
+      display: flex;
+      justify-content: center;
+      color: #0097a7;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .checks {
+      max-width: 620px;
+      margin: 0 auto 24px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .checkbox-line {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      color: var(--teal-dark);
+    }
+
+    .checkbox-line a {
+      color: var(--teal-dark);
+      text-decoration: underline;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .cta-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .cta-hand {
+      width: 34px;
+      height: 34px;
+      animation: ctaPulse 1.6s ease-in-out infinite;
+    }
+
+    .btn {
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      padding: 16px 30px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(90deg, var(--green) 0%, var(--teal) 100%);
+      box-shadow: 0 8px 20px rgba(0,0,0,.12);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      animation: ctaPulse 1.6s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    .btn.secondary {
+      background: white;
+      color: var(--teal-dark);
+      border: 1px solid var(--border);
+      animation: none;
+    }
+
+    @keyframes ctaPulse {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-2px) scale(1.03); }
+    }
+
+    .footnote {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: right;
+      margin-top: 16px;
+    }
+
+    .thanks {
+      text-align: center;
+      color: var(--teal-dark);
+      font-size: 22px;
+      font-weight: 800;
+      margin-top: 18px;
+    }
+
+    .top-logo-wrap {
+      position: absolute;
+      top: 20px;
+      left: calc(50% - 500px);
+      z-index: 10;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .top-logo {
+      max-width: 320px;
+      width: 100%;
+      display: block;
+    }
+
+    .landing-footer {
+      text-align: center;
+      margin-top: 0;
+      padding: 24px 5px 0px;
+      width: 100%;
+    }
+
+    .footer-logo {
+      max-width: 280px;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: white;
+      opacity: 0.9;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 24, 28, 0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 999;
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-box {
+      width: min(860px, 100%);
+      max-height: 90vh;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,.26);
+    }
+
+    .modal-head {
+      background: linear-gradient(90deg, var(--green), var(--teal));
+      color: white;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .modal-content {
+      padding: 24px;
+      overflow: auto;
+      max-height: calc(90vh - 72px);
+      color: #425159;
+      line-height: 1.6;
+    }
+
+    .close-btn {
+      background: rgba(255,255,255,.2);
+      border: 0;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 22px;
+    }
+
+    @media (max-width: 1024px) {
+      .page {
+        padding: 40px 16px;
+      }
+
+      #pageSurvey {
+        padding-top: 100px;
+      }
+
+      .card {
+        max-width: 920px;
+      }
+
+      .top-logo-wrap {
+        left: 16px;
+        top: 18px;
+        max-width: calc(100% - 32px);
+      }
+
+      .top-logo {
+        max-width: 240px;
+      }
+
+      .body {
+        padding: 24px 24px 32px;
+      }
+
+      h1, h2 {
+        font-size: 30px;
+      }
+
+      .intro {
+        font-size: 17px;
+        max-width: 720px;
+      }
+
+      .legal-note {
+        font-size: 10px;
+      }
+
+      .field-row {
+        grid-template-columns: 180px 1fr;
+      }
+
+      .field-row label {
+        font-size: 17px;
+      }
+
+      .question-label {
+        font-size: 16px;
+      }
+
+      .scale-header {
+        font-size: 17px;
+      }
+
+      .footer-logo {
+        max-width: 240px;
+      }
+
+      .footer-copy {
+        font-size: 11px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .page {
+        padding: 24px 12px;
+      }
+
+      #pageSurvey {
+        padding-top: 82px;
+      }
+
+      .top-logo-wrap {
+        left: 12px;
+        top: 12px;
+        max-width: calc(100% - 24px);
+      }
+
+      .top-logo {
+        max-width: 180px;
+      }
+
+      .card {
+        max-width: 100%;
+      }
+
+      .body {
+        padding: 20px 16px 28px;
+      }
+
+      h1, h2 {
+        font-size: 28px;
+        line-height: 1.1;
+        margin-bottom: 12px;
+      }
+
+      .intro {
+        font-size: 15px;
+        line-height: 1.45;
+        max-width: 100%;
+        margin-bottom: 8px;
+      }
+
+      .legal-note {
+        font-size: 9px;
+        margin-bottom: 20px;
+      }
+
+      .field,
+      .question-block {
+        padding: 16px 14px;
+        border-radius: 14px;
+      }
+
+      .field-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .field-row label {
+        font-size: 16px;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      textarea {
+        font-size: 14px;
+        padding: 10px 12px;
+      }
+
+      .scale-header,
+      .question-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .scale-header .score-cell,
+      .question-row .score-cell {
+        justify-content: flex-start;
+      }
+
+      .scale-header {
+        font-size: 16px;
+        margin-bottom: 14px;
+      }
+
+      .question-label {
+        font-size: 15px;
+        line-height: 1.4;
+        padding-right: 0;
+      }
+
+      .question-row {
+        padding: 12px 0;
+      }
+
+      .checks {
+        max-width: 100%;
+        gap: 10px;
+      }
+
+      .checkbox-line {
+        font-size: 14px;
+      }
+
+      .actions {
+        margin-top: 18px;
+      }
+
+      .cta-wrap {
+        width: 100%;
+      }
+
+      .cta-hand {
+        display: none;
+      }
+
+      .btn {
+        width: 100%;
+        font-size: 16px;
+        padding: 15px 18px;
+        text-align: center;
+      }
+
+      .btn.secondary {
+        width: 100%;
+      }
+
+      .footnote {
+        text-align: center;
+        font-size: 11px;
+      }
+
+      .thanks {
+        font-size: 20px;
+      }
+
+      .landing-footer {
+        padding: 22px 16px 30px;
+      }
+
+      .footer-logo {
+        max-width: 170px;
+      }
+
+      .footer-copy {
+        font-size: 10px;
+        line-height: 1.35;
+      }
+
+      .modal {
+        padding: 12px;
+      }
+
+      .modal-box {
+        border-radius: 14px;
+      }
+
+      .modal-head {
+        padding: 14px 16px;
+      }
+
+      .modal-content {
+        padding: 16px;
+        font-size: 14px;
+      }
+    }
+
+	  .btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+	  
+	  .toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  max-width: 360px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(24, 66, 75, 0.96);
+  color: white;
+  font-size: 14px;
+  line-height: 1.4;
+  box-shadow: 0 12px 30px rgba(0,0,0,.22);
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease;
+  z-index: 2000;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast.success {
+  background: rgba(0, 139, 152, 0.96);
+}
+
+.toast.error {
+  background: rgba(176, 52, 52, 0.96);
+}
+
+@media (max-width: 767px) {
+  .toast {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    max-width: none;
+    font-size: 13px;
+  }
+}
+  </style>
+</head>
+	<body>
+		<div id="toast" class="toast"></div>
+  <section class="page active" id="pageSurvey">
+    <div class="top-logo-wrap">
+      <img src="assets/logo-stendhal-completo-blanco.png" alt="Stendhal" class="top-logo" />
+    </div>
+
+    <div class="card">
+      <div class="hero">
+        <img src="assets/top-landing.png" alt="Expert Forum" />
+      </div>
+
+      <div class="body">
+        <h1>Encuesta de satisfacción</h1>
+
+        <p class="intro">
+          En Stendhal, su opinión es clave para seguir fortaleciendo la calidad científica de nuestros encuentros académicos.
+          <strong>Le invitamos a responder esta breve encuesta.</strong>
+        </p>
+
+        <p class="legal-note">
+          Sus respuestas serán tratadas con confidencialidad y utilizadas únicamente con fines de mejora académica.
+        </p>
+
+        <div class="field">
+          <div class="field-row">
+            <label for="surveyName">Nombre (opcional)</label>
+            <input id="surveyName" name="surveyName" type="text" placeholder="Escriba su nombre" />
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="scale-header">
+            <div>
+              <div style="font-size:18px; font-weight:700; color:#0097a7; margin-bottom:6px;">Califique de 1 a 5 las siguientes preguntas,</div>
+              <div style="font-size:16px; font-weight:400; color:#0b4fa3; line-height:1.35;">donde 1 corresponde a “Nada satisfactorio”<br>y 5 a “Muy satisfactorio”.</div>
+            </div>
+            <div class="score-cell">1</div>
+            <div class="score-cell">2</div>
+            <div class="score-cell">3</div>
+            <div class="score-cell">4</div>
+            <div class="score-cell">5</div>
+          </div>
+
+          <div id="questionContainer"></div>
+
+          <div style="margin-top:16px;">
+            <label for="suggestions" style="display:block; font-weight:400; font-size:17px; color:#0097a7; margin-bottom:10px; line-height:1.45;">¿Qué sugerencias o temas le gustaría que abordáramos en futuras ediciones del evento?</label>
+            <textarea id="suggestions" placeholder="Cuéntenos sus sugerencias..."></textarea>
+          </div>
+        </div>
+
+        <div class="actions">
+          <div class="cta-wrap">
+            <img src="assets/dedo-clic.png" alt="clic" class="cta-hand" />
+            <button class="btn" id="continueBtn">Continúe para descargar su certificado</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="landing-footer">
+      <img src="assets/logo-stendhal-completo-blanco.png" alt="Stendhal" class="footer-logo" />
+      <div class="footer-copy">Material exclusivo para personal de la salud. Prohibida su copia o reproducción.</div>
+    </div>
+	 
+  </section>
+
+  <section class="page" id="pageCertificate">
+    <div class="card">
+      <div class="hero">
+        <img src="assets/top-landing.png" alt="Expert Forum" />
+      </div>
+
+      <div class="body">
+        <h2>Diligencie el siguiente formulario para generar su certificado</h2>
+
+        <div class="field">
+          <div class="field-row">
+            <label for="fullName">Nombre*</label>
+            <input id="fullName" name="fullName" type="text" placeholder="Nombre completo" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="field-row">
+            <label for="email">Mail*</label>
+            <input id="email" name="email" type="email" placeholder="correo@ejemplo.com" required />
+          </div>
+        </div>
+
+        <div class="checks">
+          <label class="checkbox-line">
+            <input type="checkbox" id="acceptData" />
+            <span>He leído y aceptado el <a href="#" id="openPolicies">tratamiento de datos personales</a>.</span>
+          </label>
+
+          <label class="checkbox-line">
+            <input type="checkbox" id="sendCopy" checked />
+            <span>Enviar su certificado vía mail.</span>
+          </label>
+        </div>
+
+        <div class="actions">
+          <button class="btn" id="downloadBtn">Descargue su certificado</button>
+          <button class="btn secondary" id="backBtn">Volver a la encuesta</button>
+        </div>
+
+        <div class="footnote">*Estos campos son obligatorios</div>
+        <div class="thanks">¡Gracias por su participación!</div>
+      </div>
+		</div>
+	  
+	  <div class="landing-footer">
+    <img src="assets/logo-stendhal-completo-blanco.png" alt="Stendhal" class="footer-logo" />
+    <div class="footer-copy">Material exclusivo para personal de la salud. Prohibida su copia o reproducción.</div>
+  </div>
+  </section>
+	
+  <section class="page" id="pageThanks">
+  <div class="card">
+    <div class="hero">
+      <img src="assets/top-landing.png" alt="Expert Forum" />
+    </div>
+
+    <div class="body" style="text-align:center;">
+      <h2>¡Gracias por su participación!</h2>
+
+      <p class="intro" style="max-width:700px;">
+        Su certificado ha sido generado correctamente.<br>
+        Esperamos contar con su participación en una próxima ocasión.
+      </p>
+
+      <div class="field" style="max-width:700px; margin: 24px auto;">
+        <p style="margin:0 0 14px; font-size:18px; color:#0097a7; font-weight:700;">
+          Síganos en nuestras redes sociales
+        </p>
+
+        <div style="display:flex; justify-content:center; gap:18px; flex-wrap:wrap;">
+          <a href="#" target="_blank">Instagram</a>
+          <a href="#" target="_blank">Facebook</a>
+          <a href="#" target="_blank">LinkedIn</a>
+          <a href="#" target="_blank">Sitio web</a>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn secondary" id="downloadAgainBtn">
+          Abrir nuevamente su certificado
+        </button>
+      </div>
+    </div>
+  </div>
+	  <div class="landing-footer">
+      <img src="assets/logo-stendhal-completo-blanco.png" alt="Stendhal" class="footer-logo" />
+      <div class="footer-copy">Material exclusivo para personal de la salud. Prohibida su copia o reproducción.</div>
+    </div>
+</section>
+
+  <div class="modal" id="policyModal" aria-hidden="true" role="dialog" aria-labelledby="policyTitle">
+    <div class="modal-box">
+      <div class="modal-head">
+        <strong id="policyTitle">Tratamiento de datos personales – Stendhal</strong>
+        <button class="close-btn" id="closePolicyModal" aria-label="Cerrar">×</button>
+      </div>
+      <div class="modal-content">
+        <p>Stendhal Colombia S.A.S., en su calidad de responsable del tratamiento de datos personales, informa que los datos recolectados serán utilizados para fines relacionados con la gestión de relaciones comerciales, científicas y educativas, incluyendo la invitación a eventos, el envío de información médica y científica, así como el cumplimiento de obligaciones legales y regulatorias.</p>
+        <p>Los datos personales podrán incluir información de identificación, contacto, datos profesionales y, en caso de ser necesario, datos sensibles, los cuales serán tratados conforme a la autorización previa, expresa e informada del titular.</p>
+        <p>El titular de los datos autoriza a Stendhal a realizar la transferencia y/o transmisión de sus datos personales a otras entidades del grupo o a terceros ubicados dentro o fuera del territorio nacional, garantizando en todo momento niveles adecuados de protección de la información.</p>
+        <p>Stendhal implementa medidas de seguridad administrativas, técnicas y físicas para proteger los datos personales contra pérdida, uso indebido, acceso no autorizado o alteración.</p>
+        <p>El titular podrá ejercer sus derechos de acceso, rectificación, actualización, supresión y revocatoria de la autorización, conforme a lo establecido en la normativa aplicable, especialmente la Ley 1581 de 2012 y sus decretos reglamentarios.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  const questions = [
+    { id: 'q1', text: '¿Cómo calificaría su experiencia general en el evento?' },
+    { id: 'q2', text: '¿Qué tan relevante fue el contenido científico para su práctica clínica?' },
+    { id: 'q3', text: '¿Qué tan aplicables considera los contenidos discutidos en su toma de decisiones clínicas?' },
+    { id: 'q4', text: '¿Cómo califica el nivel académico de los conferencistas?' },
+    { id: 'q5', text: '¿Cómo evalúa la profundidad de los temas abordados?' },
+    { id: 'q6', text: '¿Qué tan adecuado fue el equilibrio entre actualización científica y discusión práctica?' },
+    { id: 'q7', text: '¿Cómo evaluaría la estructura, organización y presentación general del evento (agenda, tiempos y logística)?' }
+  ];
+
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzwOyypT5_9S7lYkKNejOQm8LVRFNjOnEeYjJEOjefrtiPLGRg7HMm_IsSF15bJ8VReeQ/exec';
+
+  const questionContainer = document.getElementById('questionContainer');
+  const continueBtn = document.getElementById('continueBtn');
+  const backBtn = document.getElementById('backBtn');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const acceptData = document.getElementById('acceptData');
+  const openPolicies = document.getElementById('openPolicies');
+  const policyModal = document.getElementById('policyModal');
+  const closePolicyModal = document.getElementById('closePolicyModal');
+  const surveyNameInput = document.getElementById('surveyName');
+  const fullNameInput = document.getElementById('fullName');
+  const emailInput = document.getElementById('email');
+  const suggestionsInput = document.getElementById('suggestions');
+  const sendCopyInput = document.getElementById('sendCopy');
+  const downloadAgainBtn = document.getElementById('downloadAgainBtn');
+  let lastGeneratedPdfUrl = '';
+  let certificateAlreadyGenerated = false;
+
+  function closePolicyDialog() {
+    if (!policyModal) return;
+    policyModal.classList.remove('open');
+    policyModal.setAttribute('aria-hidden', 'true');
+  }
+
+  function openPolicyDialog(e) {
+    e.preventDefault();
+    if (!policyModal) return;
+    policyModal.classList.add('open');
+    policyModal.setAttribute('aria-hidden', 'false');
+  }
+
+  function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+    const targetPage = document.getElementById(pageId);
+    if (targetPage) {
+      targetPage.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  function validateSurveyQuestions() {
+    return questions.filter(q => !document.querySelector(`input[name="${q.id}"]:checked`));
+  }
+
+  function buildSurveyQuestions() {
+    if (!questionContainer) return;
+
+    questions.forEach((question) => {
+      const row = document.createElement('div');
+      row.className = 'question-row';
+
+      const label = document.createElement('div');
+      label.className = 'question-label';
+      label.textContent = question.text;
+      row.appendChild(label);
+
+      for (let i = 1; i <= 5; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'score-cell';
+        cell.innerHTML = `<input type="radio" name="${question.id}" value="${i}" aria-label="${question.text} - ${i}" />`;
+        row.appendChild(cell);
+      }
+
+      questionContainer.appendChild(row);
+    });
+  }
+
+  function buildPayload() {
+    return {
+      surveyName: surveyNameInput ? surveyNameInput.value.trim() : '',
+      questions: Object.fromEntries(
+        questions.map(q => [
+          q.id,
+          document.querySelector(`input[name="${q.id}"]:checked`)?.value || null
+        ])
+      ),
+      suggestions: suggestionsInput ? suggestionsInput.value.trim() : '',
+      fullName: fullNameInput ? fullNameInput.value.trim() : '',
+      email: emailInput ? emailInput.value.trim() : '',
+      acceptData: acceptData ? acceptData.checked : false,
+      sendCopy: sendCopyInput ? sendCopyInput.checked : false,
+      createdAt: new Date().toISOString()
+    };
+  }
+
+  buildSurveyQuestions();
+
+  if (continueBtn) {
+    continueBtn.addEventListener('click', () => {
+      const unanswered = validateSurveyQuestions();
+
+      if (unanswered.length) {
+        alert('Debe responder todas las preguntas obligatorias antes de continuar.');
+        return;
+      }
+
+      const surveyName = surveyNameInput ? surveyNameInput.value.trim() : '';
+      if (surveyName && fullNameInput && !fullNameInput.value.trim()) {
+        fullNameInput.value = surveyName;
+      }
+
+      showPage('pageCertificate');
+    });
+  }
+
+  if (backBtn) {
+    backBtn.addEventListener('click', () => showPage('pageSurvey'));
+  }
+
+  if (openPolicies) {
+    openPolicies.addEventListener('click', openPolicyDialog);
+  }
+
+  if (closePolicyModal) {
+    closePolicyModal.addEventListener('click', closePolicyDialog);
+  }
+
+  if (policyModal) {
+    policyModal.addEventListener('click', (e) => {
+      if (e.target === policyModal) {
+        closePolicyDialog();
+      }
+    });
+  }
+
+  if (downloadAgainBtn) {
+  downloadAgainBtn.addEventListener('click', () => {
+    if (lastGeneratedPdfUrl) {
+      window.open(lastGeneratedPdfUrl, '_blank');
+    } else {
+      showToast('Aún no hay un certificado generado.', 'error');
+    }
+  });
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closePolicyDialog();
+  }
+});
+
+if (downloadBtn) {
+  downloadBtn.addEventListener('click', async () => {
+    if (certificateAlreadyGenerated) {
+      showToast('El certificado ya fue generado para este registro.', 'error');
+      return;
+    }
+
+    const fullName = fullNameInput ? fullNameInput.value.trim() : '';
+    const email = emailInput ? emailInput.value.trim() : '';
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!fullName || !email) {
+      showToast('Debe diligenciar nombre y correo electrónico.', 'error');
+      return;
+    }
+
+    if (!acceptData || !acceptData.checked) {
+      showToast('Debe aceptar el tratamiento de datos personales para continuar.', 'error');
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      showToast('Debe ingresar un correo electrónico válido.', 'error');
+      return;
+    }
+
+    const payload = buildPayload();
+    const originalText = downloadBtn.textContent;
+
+    downloadBtn.disabled = true;
+    downloadBtn.textContent = 'Generando certificado...';
+
+    try {
+      const response = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const rawText = await response.text();
+      let result;
+
+      try {
+        result = JSON.parse(rawText);
+      } catch {
+        throw new Error('La respuesta del servidor no tuvo un formato válido.');
+      }
+
+      if (!result.success) {
+        throw new Error(result.message || 'No fue posible generar el certificado.');
+      }
+
+      if (!result.pdfUrl) {
+        throw new Error('No se recibió la URL del certificado.');
+      }
+
+      lastGeneratedPdfUrl = result.pdfUrl;
+      certificateAlreadyGenerated = true;
+
+      window.open(result.pdfUrl, '_blank');
+      showToast('Su certificado ha sido generado correctamente.', 'success');
+      showPage('pageThanks');
+
+    } catch (error) {
+      console.error('Error al generar certificado:', error);
+      showToast(error.message || 'Ocurrió un error al generar el certificado.', 'error');
+    } finally {
+      downloadBtn.disabled = false;
+      downloadBtn.textContent = originalText;
+    }
+  });
+}
+	
+  const toast = document.getElementById('toast');
+
+function showToast(message, type = 'success') {
+  if (!toast) return;
+
+  toast.textContent = message;
+  toast.className = `toast show ${type}`;
+
+  clearTimeout(showToast._timer);
+  showToast._timer = setTimeout(() => {
+    toast.className = 'toast';
+  }, 3500);
+}
+</script>
+</body>
+</html>
