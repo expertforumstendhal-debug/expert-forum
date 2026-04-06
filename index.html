@@ -311,58 +311,6 @@
       opacity: 0.9;
     }
 
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(7, 24, 28, 0.65);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      z-index: 999;
-    }
-
-    .modal.open {
-      display: flex;
-    }
-
-    .modal-box {
-      width: min(860px, 100%);
-      max-height: 90vh;
-      background: white;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0,0,0,.26);
-    }
-
-    .modal-head {
-      background: linear-gradient(90deg, var(--green), var(--teal));
-      color: white;
-      padding: 18px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .modal-content {
-      padding: 24px;
-      overflow: auto;
-      max-height: calc(90vh - 72px);
-      color: #425159;
-      line-height: 1.6;
-    }
-
-    .close-btn {
-      background: rgba(255,255,255,.2);
-      border: 0;
-      color: white;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 22px;
-    }
 
     @media (max-width: 1024px) {
       .page {
@@ -430,7 +378,7 @@
     }
 
     @media (max-width: 767px) {
-
+		
 		.body {
     background-attachment: scroll;
 			background-position: top left;
@@ -624,25 +572,8 @@
         font-size: 10px;
         line-height: 1.35;
       }
-
-      .modal {
-        padding: 12px;
-      }
-
-      .modal-box {
-        border-radius: 14px;
-      }
-
-      .modal-head {
-        padding: 14px 16px;
-      }
-
-      .modal-content {
-        padding: 16px;
-        font-size: 14px;
-      }
-
-	  .survey-intro {
+	
+		.survey-intro {
   padding: 16px 14px;
   border-radius: 14px;
 }
@@ -718,7 +649,7 @@
 .mobile-scale-row .score-cell {
   justify-content: center;
 }
-
+	  
 .survey-intro {
   background: #ffffff;
   border-radius: 18px;
@@ -850,7 +781,7 @@
         <div class="checks">
           <label class="checkbox-line">
             <input type="checkbox" id="acceptData" />
-            <span>He leído y aceptado el <a href="#" id="openPolicies">tratamiento de datos personales</a>.</span>
+            <span>He leído y aceptado el <a href="politica-privacidad.html" target="_blank" rel="noopener noreferrer">tratamiento de datos personales</a>.</span>
           </label>
 
           <label class="checkbox-line">
@@ -923,22 +854,6 @@
     </div>
 </section>
 
-  <div class="modal" id="policyModal" aria-hidden="true" role="dialog" aria-labelledby="policyTitle">
-    <div class="modal-box">
-      <div class="modal-head">
-        <strong id="policyTitle">Tratamiento de datos personales – Stendhal</strong>
-        <button class="close-btn" id="closePolicyModal" aria-label="Cerrar">×</button>
-      </div>
-      <div class="modal-content">
-        <p>Stendhal Colombia S.A.S., en su calidad de responsable del tratamiento de datos personales, informa que los datos recolectados serán utilizados para fines relacionados con la gestión de relaciones comerciales, científicas y educativas, incluyendo la invitación a eventos, el envío de información médica y científica, así como el cumplimiento de obligaciones legales y regulatorias.</p>
-        <p>Los datos personales podrán incluir información de identificación, contacto, datos profesionales y, en caso de ser necesario, datos sensibles, los cuales serán tratados conforme a la autorización previa, expresa e informada del titular.</p>
-        <p>El titular de los datos autoriza a Stendhal a realizar la transferencia y/o transmisión de sus datos personales a otras entidades del grupo o a terceros ubicados dentro o fuera del territorio nacional, garantizando en todo momento niveles adecuados de protección de la información.</p>
-        <p>Stendhal implementa medidas de seguridad administrativas, técnicas y físicas para proteger los datos personales contra pérdida, uso indebido, acceso no autorizado o alteración.</p>
-        <p>El titular podrá ejercer sus derechos de acceso, rectificación, actualización, supresión y revocatoria de la autorización, conforme a lo establecido en la normativa aplicable, especialmente la Ley 1581 de 2012 y sus decretos reglamentarios.</p>
-      </div>
-    </div>
-  </div>
-
   <script>
   const questions = [
     { id: 'q1', text: '¿Cómo calificaría su experiencia general en el evento?' },
@@ -957,9 +872,6 @@
   const backBtn = document.getElementById('backBtn');
   const downloadBtn = document.getElementById('downloadBtn');
   const acceptData = document.getElementById('acceptData');
-  const openPolicies = document.getElementById('openPolicies');
-  const policyModal = document.getElementById('policyModal');
-  const closePolicyModal = document.getElementById('closePolicyModal');
   const surveyNameInput = document.getElementById('surveyName');
   const fullNameInput = document.getElementById('fullName');
   const emailInput = document.getElementById('email');
@@ -968,19 +880,6 @@
   const downloadAgainBtn = document.getElementById('downloadAgainBtn');
   let lastGeneratedPdfUrl = '';
   let certificateAlreadyGenerated = false;
-
-  function closePolicyDialog() {
-    if (!policyModal) return;
-    policyModal.classList.remove('open');
-    policyModal.setAttribute('aria-hidden', 'true');
-  }
-
-  function openPolicyDialog(e) {
-    e.preventDefault();
-    if (!policyModal) return;
-    policyModal.classList.add('open');
-    policyModal.setAttribute('aria-hidden', 'false');
-  }
 
   function showPage(pageId) {
     document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
@@ -1060,22 +959,6 @@
     backBtn.addEventListener('click', () => showPage('pageSurvey'));
   }
 
-  if (openPolicies) {
-    openPolicies.addEventListener('click', openPolicyDialog);
-  }
-
-  if (closePolicyModal) {
-    closePolicyModal.addEventListener('click', closePolicyDialog);
-  }
-
-  if (policyModal) {
-    policyModal.addEventListener('click', (e) => {
-      if (e.target === policyModal) {
-        closePolicyDialog();
-      }
-    });
-  }
-
   if (downloadAgainBtn) {
   downloadAgainBtn.addEventListener('click', () => {
     if (lastGeneratedPdfUrl) {
@@ -1085,12 +968,6 @@
     }
   });
 }
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    closePolicyDialog();
-  }
-});
 
 if (downloadBtn) {
   downloadBtn.addEventListener('click', async () => {

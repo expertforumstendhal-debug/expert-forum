@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tratamiento de datos personales | Expert Forum</title>
+  <style>
+    :root {
+      --green: #8dc63f;
+      --teal: #00a7b5;
+      --teal-dark: #008b98;
+      --blue: #0b4fa3;
+      --text: #18424b;
+      --panel: rgba(255,255,255,0.96);
+      --shadow: 0 16px 45px rgba(0,0,0,.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .bg-fixed {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image: url('assets/back.jpg.jpeg');
+      background-size: cover;
+      background-position: top left;
+      background-repeat: no-repeat;
+		background-attachment: fixed;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 20px 10px;
+      flex-direction: column;
+    }
+
+    .top-logo-wrap {
+      position: absolute;
+      top: 20px;
+      left: calc(50% - 500px);
+      z-index: 10;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .top-logo {
+      max-width: 320px;
+      width: 100%;
+      display: block;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 1000px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero img {
+      width: 100%;
+      display: block;
+    }
+
+    .body {
+      padding: 28px 36px 40px;
+    }
+
+    h1 {
+      margin: 0 0 20px;
+      text-align: center;
+      color: var(--teal-dark);
+      font-size: 34px;
+      line-height: 1.15;
+    }
+
+    .policy-text {
+      max-width: 760px;
+      margin: 0 auto;
+      color: #425159;
+      line-height: 1.75;
+      font-size: 16px;
+    }
+
+    .policy-text p {
+      margin: 0 0 22px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 28px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 26px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(90deg, var(--green) 0%, var(--teal) 100%);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .landing-footer {
+      text-align: center;
+      margin-top: 18px;
+      padding: 24px 16px 20px;
+      width: 100%;
+    }
+
+    .footer-logo {
+      max-width: 220px;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: white;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 1024px) {
+      .top-logo-wrap {
+        left: 16px;
+        top: 18px;
+        max-width: calc(100% - 32px);
+      }
+
+      .top-logo {
+        max-width: 240px;
+      }
+
+      .body {
+        padding: 24px 24px 32px;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .page {
+        padding: 82px 12px 24px;
+      }
+
+      .top-logo-wrap {
+        left: 12px;
+        top: 12px;
+        max-width: calc(100% - 24px);
+      }
+
+      .top-logo {
+        max-width: 180px;
+      }
+
+      .body {
+        padding: 20px 16px 28px;
+      }
+
+      h1 {
+        font-size: 28px;
+        line-height: 1.1;
+      }
+
+      .policy-text {
+        font-size: 15px;
+        line-height: 1.65;
+      }
+
+      .landing-footer {
+        padding: 22px 16px 30px;
+      }
+
+      .footer-logo {
+        max-width: 170px;
+      }
+
+      .footer-copy {
+        font-size: 10px;
+        line-height: 1.35;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-fixed"></div>
+
+  <section class="page">
+    <div class="top-logo-wrap">
+      <img src="assets/logo-stendhal-completo-blanco.png" alt="Stendhal" class="top-logo" />
+    </div>
+
+    <div class="card">
+      <div class="hero">
+        <img src="assets/top-landing.png" alt="Expert Forum" />
+      </div>
+
+      <div class="body">
+        <h1>Tratamiento de datos personales – Stendhal</h1>
+
+        <div class="policy-text">
+          <p>Stendhal Colombia S.A.S., en su calidad de responsable del tratamiento de datos personales, informa que los datos recolectados serán utilizados para fines relacionados con la gestión de relaciones comerciales, científicas y educativas, incluyendo la invitación a eventos, el envío de información médica y científica, así como el cumplimiento de obligaciones legales y regulatorias.</p>
+
+          <p>Los datos personales podrán incluir información de identificación, contacto, datos profesionales y, en caso de ser necesario, datos sensibles, los cuales serán tratados conforme a la autorización previa, expresa e informada del titular.</p>
+
+          <p>El titular de los datos autoriza a Stendhal a realizar la transferencia y/o transmisión de sus datos personales a otras entidades del grupo o a terceros ubicados dentro o fuera del territorio nacional, garantizando en todo momento niveles adecuados de protección de la información.</p>
+
+          <p>Stendhal implementa medidas de seguridad administrativas, técnicas y físicas para proteger los datos personales contra pérdida, uso indebido, acceso no autorizado o alteración.</p>
+
+          <p>El titular podrá ejercer sus derechos de acceso, rectificación, actualización, supresión y revocatoria de la autorización, conforme a lo establecido en la normativa aplicable, especialmente la Ley 1581 de 2012 y sus decretos reglamentarios.</p>
+        </div>
+
+        <div class="actions">
+          <a href="index.html" class="btn">Volver a la página principal</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="landing-footer">
+      <img src="assets/logo-stendhal-completo-blanco.png" alt="Stendhal" class="footer-logo" />
+      <div class="footer-copy">Material exclusivo para personal de la salud. Prohibida su copia o reproducción.</div>
+    </div>
+  </section>
+</body>
+</html>
