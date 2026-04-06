@@ -22,12 +22,16 @@
     * { box-sizing: border-box; }
 
     body {
-      margin: 0;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      color: var(--text);
-      background: var(--bg);
-      min-height: 100vh;
-    }
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--text);
+  background-image: url('assets/back.jpg.jpeg');
+  background-size: cover;
+  background-position: top left;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  min-height: 100vh;
+}
 
     .page {
       min-height: 100vh;
@@ -426,6 +430,12 @@
     }
 
     @media (max-width: 767px) {
+
+		.body {
+    background-attachment: scroll;
+			background-position: top left;
+  }
+		
       .page {
         padding: 24px 12px;
       }
