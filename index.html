@@ -985,6 +985,52 @@ if (downloadBtn) {
     const payload = buildPayload();
     const originalText = downloadBtn.textContent;
 
+    const pdfTab = window.open('', '_blank');
+
+    if (!pdfTab) {
+      showToast('El navegador bloqueó la nueva pestaña. Por favor habilite las ventanas emergentes para este sitio.', 'error');
+      return;
+    }
+
+    pdfTab.document.write(`
+      <html>
+        <head>
+          <title>Generando certificado...</title>
+          <style>
+            body {
+              margin: 0;
+              font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              min-height: 100vh;
+              background: #f3f7f8;
+              color: #18424b;
+            }
+            .box {
+              text-align: center;
+              padding: 24px;
+            }
+            h2 {
+              margin: 0 0 10px;
+              color: #008b98;
+            }
+            p {
+              margin: 0;
+              color: #5e7076;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="box">
+            <h2>Generando certificado...</h2>
+            <p>Por favor espere unos segundos.</p>
+          </div>
+        </body>
+      </html>
+    `);
+    pdfTab.document.close();
+
     downloadBtn.disabled = true;
     downloadBtn.textContent = 'Generando certificado...';
 
@@ -1003,21 +1049,25 @@ if (downloadBtn) {
       try {
         result = JSON.parse(rawText);
       } catch {
+        pdfTab.close();
         throw new Error('La respuesta del servidor no tuvo un formato válido.');
       }
 
       if (!result.success) {
+        pdfTab.close();
         throw new Error(result.message || 'No fue posible generar el certificado.');
       }
 
       if (!result.pdfUrl) {
+        pdfTab.close();
         throw new Error('No se recibió la URL del certificado.');
       }
 
       lastGeneratedPdfUrl = result.pdfUrl;
       certificateAlreadyGenerated = true;
 
-      window.open(result.pdfUrl, '_blank');
+      pdfTab.location.href = result.pdfUrl;
+
       showToast('Su certificado ha sido generado correctamente.', 'success');
       showPage('pageThanks');
 
@@ -1030,7 +1080,7 @@ if (downloadBtn) {
     }
   });
 }
-	
+	  
   const toast = document.getElementById('toast');
 
 function showToast(message, type = 'success') {
