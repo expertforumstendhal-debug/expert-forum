@@ -1077,7 +1077,7 @@ if (downloadBtn) {
       <div class="box">
         <div class="spinner"></div>
         <h2>Generando certificado...</h2>
-        <p>Por favor espere unos segundos.</p>
+        <p>Por favor espere unos segundos... Sí la pestaña no se cierra automáticamente, puede cerrarla.</p>
       </div>
     </body>
   </html>
@@ -1119,7 +1119,29 @@ if (downloadBtn) {
       lastGeneratedPdfUrl = result.pdfUrl;
       certificateAlreadyGenerated = true;
 
-      pdfTab.location.href = result.downloadUrl || result.pdfUrl;
+      const downloadUrl = result.downloadUrl || result.pdfUrl;
+
+// Lanzar descarga
+pdfTab.location.href = downloadUrl;
+
+// Mostrar mensaje en la pestaña mientras descarga (opcional)
+pdfTab.document.body.innerHTML = `
+  <div style="display:flex; align-items:center; justify-content:center; height:100vh; font-family:sans-serif;">
+    <div style="text-align:center;">
+      <h2 style="color:#0097a7;">Descargando certificado...</h2>
+      <p>Puede cerrar esta ventana si no se cierra automáticamente.</p>
+    </div>
+  </div>
+`;
+
+// ⏱️ Esperar y cerrar
+setTimeout(() => {
+  try {
+    pdfTab.close();
+  } catch (e) {
+    console.warn('No se pudo cerrar la pestaña', e);
+  }
+}, 8000); // puedes ajustar entre 4–6 segundos
 
       showToast('Su certificado ha sido generado correctamente.', 'success');
       showPage('pageThanks');
