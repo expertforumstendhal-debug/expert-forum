@@ -994,42 +994,90 @@ if (downloadBtn) {
     }
 
     pdfTab.document.write(`
-      <html>
-        <head>
-          <title>Generando certificado...</title>
-          <style>
-            body {
-              margin: 0;
-              font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              min-height: 100vh;
-              background: #f3f7f8;
-              color: #18424b;
-            }
-            .box {
-              text-align: center;
-              padding: 24px;
-            }
-            h2 {
-              margin: 0 0 10px;
-              color: #008b98;
-            }
-            p {
-              margin: 0;
-              color: #5e7076;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="box">
-            <h2>Generando certificado...</h2>
-            <p>Por favor espere unos segundos.</p>
-          </div>
-        </body>
-      </html>
-    `);
+  <!DOCTYPE html>
+  <html lang="es">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Generando certificado...</title>
+      <style>
+        body {
+          margin: 0;
+          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 100vh;
+          background: #f3f7f8;
+          color: #18424b;
+          padding: 24px;
+          box-sizing: border-box;
+        }
+
+        .box {
+          width: 100%;
+          max-width: 420px;
+          text-align: center;
+          padding: 28px 22px;
+          background: #ffffff;
+          border-radius: 18px;
+          box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+          margin: 0 0 10px;
+          color: #008b98;
+          font-size: 28px;
+          line-height: 1.15;
+        }
+
+        p {
+          margin: 0;
+          color: #5e7076;
+          font-size: 16px;
+          line-height: 1.5;
+        }
+
+        .spinner {
+          width: 46px;
+          height: 46px;
+          margin: 0 auto 18px;
+          border: 4px solid #d9e7ea;
+          border-top-color: #00a7b5;
+          border-radius: 50%;
+          animation: spin 0.9s linear infinite;
+        }
+
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 767px) {
+          .box {
+            max-width: 100%;
+            padding: 24px 18px;
+            border-radius: 16px;
+          }
+
+          h2 {
+            font-size: 24px;
+          }
+
+          p {
+            font-size: 15px;
+          }
+        }
+      </style>
+    </head>
+    <body>
+      <div class="box">
+        <div class="spinner"></div>
+        <h2>Generando certificado...</h2>
+        <p>Por favor espere unos segundos.</p>
+      </div>
+    </body>
+  </html>
+`);
     pdfTab.document.close();
 
     downloadBtn.disabled = true;
@@ -1067,7 +1115,7 @@ if (downloadBtn) {
       lastGeneratedPdfUrl = result.pdfUrl;
       certificateAlreadyGenerated = true;
 
-      pdfTab.location.href = result.pdfUrl;
+      pdfTab.location.href = result.downloadUrl || result.pdfUrl;
 
       showToast('Su certificado ha sido generado correctamente.', 'success');
       showPage('pageThanks');
